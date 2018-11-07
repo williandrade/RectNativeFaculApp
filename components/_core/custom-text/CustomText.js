@@ -25,18 +25,23 @@ export default class CustomText extends React.Component {
     }
 
     render() {
-        const fontSize = this.props.fontSize ? parseInt(this.props.fontSize) : 12;
-        let fontFamily = 'roboto';
+        let style = {};
 
+        if (this.props.fontSize) {
+            style.fontSize = parseInt(this.props.fontSize)
+        }
+        if (this.props.textAlign) {
+            style.textAlign = this.props.textAlign;
+        }
         switch (this.props.fontType) {
             case 'bold':
-                fontFamily += '-bold'
+                style.fontFamily = 'roboto-bold'
                 break;
             case 'light':
-                fontFamily += '-light'
+                style.fontFamily = 'roboto-light'
                 break;
             default:
-                fontFamily += '-medium'
+                style.fontFamily = 'roboto-medium'
                 break;
         }
 
@@ -44,7 +49,7 @@ export default class CustomText extends React.Component {
             <Text style={this.props.style}>
                 {
                     this.state.ready ? (
-                        <Text style={{ fontFamily: fontFamily, fontSize: fontSize }}>{this.props.children}</Text>
+                        <Text style={style}>{this.props.children}</Text>
                     ) : null
                 }
             </Text>
