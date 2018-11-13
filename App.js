@@ -8,12 +8,14 @@ import { Provider, connect } from 'react-redux';
 import { Session } from './reducers/Session';
 
 import Splash from './components/splash/Splash';
+import Difficulty from './components/difficulty/Difficulty';
 import Home from './components/home/Home';
 import Question from './components/question/Question';
 import End from './components/end/End';
 
 const AppNavigator = createStackNavigator({
   SplashScreen: { screen: Splash },
+  Difficulty: { screen: Difficulty },
   Home: { screen: Home },
   Question: { screen: Question },
   End: { screen: End }

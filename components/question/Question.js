@@ -28,14 +28,9 @@ class Question extends React.Component {
                 break;
         }
 
-        console.log(level);
-        console.log(session.house);
-        
         const question = questions[level][session.house - 1];
 
         let fontSizeGuess = 35;
-
-        console.log(question.question.length);
 
         if (question.question.length > 100) {
             fontSizeGuess = 25;
