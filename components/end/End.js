@@ -26,7 +26,7 @@ class End extends React.Component {
         const { dispatch } = this.props;
 
         dispatch(clearPoint());
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Difficulty');
     }
 
     render() {

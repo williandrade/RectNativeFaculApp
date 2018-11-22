@@ -40,9 +40,21 @@ class Home extends React.Component {
         case 3:
           level = 'thirdYear';
           break;
+        case 4:
+          level = 'fourthYear';
+          break;
+        case 5:
+          level = 'fifithYear';
+          break;
       }
 
-      const question = questions[level][houseNumber - 1];
+      let question = undefined;
+      
+
+      if (houseNumber % 2 == 0) {
+        const questionNumber = (houseNumber / 2) - 1;
+        question = questions[level][questionNumber];
+      }
 
       if (question) {
         this.props.navigation.navigate('Question');

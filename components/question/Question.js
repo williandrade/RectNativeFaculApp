@@ -18,7 +18,7 @@ class Question extends React.Component {
 
         const { session } = this.props;
 
-        let level = 'fourthYear';
+        let level = 'fifithYear';
         switch (session.classLevel) {
             case 2:
                 level = 'secondYear';
@@ -26,9 +26,16 @@ class Question extends React.Component {
             case 3:
                 level = 'thirdYear';
                 break;
+            case 4:
+                level = 'fourthYear';
+                break;
+            case 5:
+                level = 'fifithYear';
+                break;
         }
 
-        const question = questions[level][session.house - 1];
+        const question = questions[level][(session.house / 2) - 1];
+        // const question = questions['fifithYear'][0];
 
         let fontSizeGuess = 35;
 
@@ -85,7 +92,7 @@ class Question extends React.Component {
         setTimeout(() => {
             const { session } = this.props;
 
-            if (session.points >= 15) {
+            if (session.points >= 10) {
                 this.props.navigation.navigate('End');
             } else {
                 this.props.navigation.navigate('Home');
@@ -111,42 +118,88 @@ class Question extends React.Component {
                 <View style={styles.scenario}>
                     <Image style={styles.scenarioSunny} source={Sunny} />
                     <Image style={styles.scenarioTree} source={scenarioTree} />
-                    <View style={styles.inputBox}>
-                        {this.state.question.options.map((item, index) => {
-                            if (this.state.answer > -1) {
-
-                                let viewStyle = [styles.btn];
-
-                                if (this.state.answer == index) {
-                                    viewStyle.push(styles.btnChoosed);
-                                    if (!item.correct) {
-                                        viewStyle.push(styles.btnWrong);
-                                    }
-                                }
-                                if (item.correct) {
-                                    viewStyle.push(styles.btnCorrect);
-                                }
-
-                                return (
-                                    <View key={index} style={viewStyle}>
-                                        <Text style={{ color: '#ffffff', textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={10}>{item.text}</Text>
-                                    </View>
-                                )
-                            } else {
-                                return (
-                                    <TouchableOpacity key={index} onPress={() => this.chooseAnswer(index)}>
-                                        <View style={[styles.btn]}>
-                                            <Text style={{ color: '#ffffff', textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={10}>{item.text}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )
-                            }
-                        })}
-                    </View>
+                    <Options question={this.state.question} answer={this.state.answer} chooseAnswer={this.chooseAnswer} />
                 </View>
             </SafeAreaView>
         );
     }
+}
+
+class Options extends React.Component {
+
+    render() {
+        if (this.props.question.img) {
+            return (
+                <View style={styles.inputBox}>
+                    {this.props.question.options.map((item, index) => {
+                        if (this.props.answer > -1) {
+                            let viewStyle = [styles.btnImg];
+
+                            if (this.props.answer == index) {
+                                viewStyle.push(styles.btnChoosed);
+                                if (!item.correct) {
+                                    viewStyle.push(styles.btnWrong);
+                                }
+                            }
+                            if (item.correct) {
+                                viewStyle.push(styles.btnCorrect);
+                            }
+
+                            return (
+                                <View key={index} style={viewStyle}>
+                                    <Image resizeMode="contain" source={item.img} />
+                                </View>
+                            )
+                        } else {
+                            return (
+                                <TouchableOpacity key={index} onPress={() => this.props.chooseAnswer(index)}>
+                                    <View style={[styles.btnImg]}>
+                                        <Image resizeMode="contain" source={item.img} />
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
+                    })}
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.inputBox}>
+                    {this.props.question.options.map((item, index) => {
+                        if (this.props.answer > -1) {
+
+                            let viewStyle = [styles.btn];
+
+                            if (this.props.answer == index) {
+                                viewStyle.push(styles.btnChoosed);
+                                if (!item.correct) {
+                                    viewStyle.push(styles.btnWrong);
+                                }
+                            }
+                            if (item.correct) {
+                                viewStyle.push(styles.btnCorrect);
+                            }
+
+                            return (
+                                <View key={index} style={viewStyle}>
+                                    <Text style={{ color: '#ffffff', textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={10}>{item.text}</Text>
+                                </View>
+                            )
+                        } else {
+                            return (
+                                <TouchableOpacity key={index} onPress={() => this.props.chooseAnswer(index)}>
+                                    <View style={[styles.btn]}>
+                                        <Text style={{ color: '#ffffff', textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={10}>{item.text}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
+                    })}
+                </View>
+            )
+        }
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -180,6 +233,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#4E5DC3",
         width: 300,
         height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 10,
+        marginBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5
+    },
+    btnImg: {
+        backgroundColor: "#4E5DC3",
+        height: 90,
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 10,

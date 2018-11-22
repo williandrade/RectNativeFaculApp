@@ -41,9 +41,9 @@ class Difficulty extends React.Component {
                     <TouchableOpacity style={styles.planet5} onPress={() => this.onSubmitClassLevel(5)}>
                         <Image source={Planet5} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.planet6} onPress={() => this.onSubmitClassLevel(6)}>
+                    {/* <TouchableOpacity style={styles.planet6} onPress={() => this.onSubmitClassLevel(6)}>
                         <Image source={Planet6} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </SafeAreaView>
         );
